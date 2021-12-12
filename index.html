@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tweet</title>
+    <style>
+      html,
+      body {
+        background-color: black;
+        color: white;
+        font-family: sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <label for="url">Tweet url</label>
+      <input id="url" type="url" autofocus />
+      <button type="submit">Go</button>
+    </form>
+
+    <script>
+      const pattern = /https:\/\/twitter.com\/(\w+\/status\/\d+)/i;
+      const form = document.querySelector("form");
+      const input = document.querySelector("#url");
+      const button = document.querySelector("button");
+
+      document.addEventListener("DOMContentLoaded", () => {
+        button.disabled = !isValidInput();
+      });
+
+      input.addEventListener("input", (event) => {
+        button.disabled = !isValidInput();
+      });
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        if (!isValidInput()) {
+          return;
+        }
+
+        const path = input.value.match(pattern)[1];
+        location.assign(path);
+      });
+
+      function isValidInput() {
+        return pattern.test(input.value);
+      }
+    </script>
+  </body>
+</html>
