@@ -1,4 +1,4 @@
-const axios = require("axios").default;
+const fetch = require("node-fetch");
 
 const template = `<!DOCTYPE html>
 <html lang="en">
@@ -7,6 +7,13 @@ const template = `<!DOCTYPE html>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tweet</title>
+    <style>
+      html, body {
+        background-color: black;
+        color: white;
+        font-family: sans-serif;
+      }
+    </style>
 
     <!-- Primary Meta Tags -->
     <title>Tweet by {author}</title>
@@ -40,12 +47,12 @@ exports.handler = async function (event, context) {
     return { statusCode: 404 };
   }
 
-  const url = `https://publish.twitter.com/oembed?url=https%3A%2F%2Ftwitter.com%2F${user}%2Fstatus%2F${id}&dnt=true`;
-  const oembed = await axios.get(url);
+  const url = `https://publish.twitter.com/oembed?url=https%3A%2F%2Ftwitter.com%2F${user}%2Fstatus%2F${id}&align=center&theme=dark&dnt=true`;
+  const oembed = await fetch(url).then((res) => res.json());
   const responseHtml = template
-    .replace(/{author}/g, oembed.data.author_name)
+    .replace(/{author}/g, oembed.author_name)
     .replace(/{url}/g, event.rawUrl)
-    .replace(/{embed}/g, oembed.data.html);
+    .replace(/{embed}/g, oembed.html);
 
   return {
     statusCode: 200,
