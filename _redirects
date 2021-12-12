@@ -1,0 +1,1 @@
+/:user/status/:id    /.netlify/functions/tweet    200
