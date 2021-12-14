@@ -1,14 +1,17 @@
 {
   "name": "tweetembed",
   "version": "1.0.0",
-  "description": "",
+  "description": "Tweet Embeds as a Service",
   "scripts": {
-    "start": "netlify dev"
+    "start": "netlify dev",
+    "serve": "parcel serve index.html",
+    "build": "parcel build index.html"
   },
   "dependencies": {
     "node-fetch": "^2.6.6"
   },
   "devDependencies": {
-    "netlify-cli": "^8.0.20"
+    "netlify-cli": "^8.0.20",
+    "parcel": "^2.0.1"
   }
 }
