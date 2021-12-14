@@ -7,7 +7,10 @@ exports.handler = async function (event, context) {
   const url = `https://publish.twitter.com/oembed?url=https%3A%2F%2Ftwitter.com%2F${user}%2Fstatus%2F${id}&align=center&theme=light&dnt=true`;
 
   try {
-    const oembed = await fetch(url).then((res) => res.json());
+    const oembed = await fetch(url).then((res) => {
+      if (!res.ok) throw new Error();
+      return res.json();
+    });
 
     return {
       statusCode: 200,
@@ -55,6 +58,11 @@ function renderTweetPage(author, url, embedHtml) {
       <body>
         <main>
           <section>${embedHtml}</section>
+          <section>
+            <footer>
+              <small>Not affiliated with Twitter</small>
+            </footer>
+          </section>
         </main>
       </body>
     </html>`;
@@ -74,6 +82,11 @@ function renderNotFoundPage() {
         <main>
           <section>
             <h1>Not found</h1>
+          </section>
+          <section>
+            <footer>
+              <small>Not affiliated with Twitter</small>
+            </footer>
           </section>
         </main>
       </body>
