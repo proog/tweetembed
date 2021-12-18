@@ -5,7 +5,10 @@
   "scripts": {
     "start": "netlify dev",
     "serve": "parcel serve index.html",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html",
+    "preserve": "npm run copy-redirects",
+    "prebuild": "npm run copy-redirects",
+    "copy-redirects": "mkdir -p dist/ && cp -f _redirects dist/"
   },
   "dependencies": {
     "node-fetch": "^2.6.6"
